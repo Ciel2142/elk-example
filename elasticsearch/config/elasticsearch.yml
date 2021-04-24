@@ -1,0 +1,20 @@
+cluster.name: "docker-cluster"
+network.host: 0.0.0.0
+discovery.zen.minimum_master_nodes: 1
+discovery.type: single-node
+# logger.level: DEBUG
+# xpack.security.authc.token.enabled: true
+# xpack.security.authc.realms.oidc.TestRealm:
+#   order: 2
+#   rp.client_id: "Kibana"
+#   rp.response_type: code
+#   rp.redirect_uri: "https://localhost/kibana/api/security/oidc/callback"
+#   op.issuer: "http://localhost:8080/auth/realms/TestRealm"
+#   op.authorization_endpoint: "http://localhost:8080/auth/realms/TestRealm/protocol/openid-connect/auth"
+#   op.token_endpoint: "http://localhost:8080/auth/realms/TestRealm/protocol/openid-connect/token"
+#   op.jwkset_path: "http://localhost:8080/auth/realms/TestRealm/protocol/openid-connect/certs"
+#   op.userinfo_endpoint: "http://localhost:8080/auth/realms/TestRealm/protocol/openid-connect/userinfo"
+#   op.endsession_endpoint: "http://localhost:8080/auth/realms/TestRealm/protocol/openid-connect/logout"
+#   rp.post_logout_redirect_uri: "https://localhost/kibana/logged_out"
+#   claims.principal: "preferred_username"
+#   claims.mail: "email"
