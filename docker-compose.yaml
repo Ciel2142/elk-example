@@ -2,14 +2,16 @@ version: '2.0'
 services:
   elasticsearch:
     container_name: elasticsearch
-    image: docker.elastic.co/elasticsearch/elasticsearch:${ELK_VERSION}
+    build:
+      context: elasticsearch/
+      args:
+        ELK_VERSION: $ELK_VERSION
+#        SG_VERSION: $SG_VERSION
     environment:
-      - bootstrap.memory_lock=true
-      - xpack.security.enabled=true
-      - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - http.cors.allow-origin=*
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
       - ELASTIC_PASSWORD=$ELK_PASSWORD
+      - ELASTIC_USERNAME=$ELK_USERNAME
+#      - http.cors.allow-origin=*
     #  PFrYZ95pn4JRCuz483v1
     ulimits:
       memlock:
@@ -17,8 +19,13 @@ services:
         hard: -1
 
     volumes:
-      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-      - ./elasticsearch/storage:/usr/share/elasticsearch/data:rw
+      - type: bind
+        source: ./elasticsearch/config/elasticsearch.yml
+        target: /usr/share/elasticsearch/config/elasticsearch.yml
+        read_only: true
+      - type: bind
+        source: ./elasticsearch/storage
+        target: /usr/share/elasticsearch/data
 
     ports:
       - "9200:9200"
@@ -28,16 +35,21 @@ services:
 
   kibana:
     container_name: kibana
-    image: docker.elastic.co/kibana/kibana:${ELK_VERSION}
+    build:
+      context: kibana/
+      args:
+        ELK_VERSION: $ELK_VERSION
     ports:
       - 5601:5601
-    environment:
-      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
-      ELASTICSEARCH_USERNAME: elastic
-      ELASTICSEARCH_PASSWORD: $ELK_PASSWORD
-      
     volumes:
-      - ./kibana/config:/usr/share/kibana/config
+      - type: bind
+        source: ./kibana/config/kibana.yml
+        target: /usr/share/kibana/config/kibana.yml
+        read_only: true
+#      - ./kibana/config:/usr/share/kibana/config
+    environment:
+      - ELASTICSEARCH_USERNAME=$ELK_USERNAME
+      - ELASTICSEARCH_PASSWORD=$ELK_PASSWORD
     networks:
       - elastic
     depends_on:
@@ -45,14 +57,26 @@ services:
 
   logstash:
     container_name: logstash
-    image: docker.elastic.co/logstash/logstash:${ELK_VERSION}
+    build:
+      context: logstash/
+      args:
+        ELK_VERSION: $ELK_VERSION
     volumes:
-      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
-      - ./logstash/pipeline:/usr/share/logstash/pipeline
+      - type: bind
+        source: ./logstash/config/logstash.yml
+        target: /usr/share/logstash/config/logstash.yml
+        read_only: true
+      - type: bind
+        source: ./logstash/pipeline
+        target: /usr/share/logstash/pipeline
+        read_only: true
+      - type: bind
+        source: ./logstash/data/queue
+        target: /usr/share/logstash/data/queue
     environment:
-      - ES_USER=elastic
+      - ES_USER=$ELK_USERNAME
       - ES_PASSWORD=$ELK_PASSWORD
-      - ES_JAVA_OPTS=-Xmx256m -Xms256m
+      - ES_JAVA_OPTS=-Xms256m -Xmx256m
     ports:
       - "5000:5000"
     networks:
@@ -63,6 +87,8 @@ services:
   curator:
     build:
       context: extensions/curator/
+      args:
+        CRON_CURATOR: $CRON_CURATOR
     init: true
     volumes:
       - type: bind
@@ -77,23 +103,7 @@ services:
       - elasticsearch
     networks:
       - elastic
-  nginx:
-    image: nginx:alpine
-    container_name: nginx
-    volumes:
-      - './nginx/etc/nginx.conf:/etc/nginx/nginx.conf:ro'
-      - './nginx/public:/usr/share/nginx/html:ro'
-      - './nginx/etc/.htpasswd.user:/etc/nginx/.htpasswd.user:ro'
-    links:
-      - elasticsearch
-      - kibana
-    depends_on:
-      - elasticsearch
-      - kibana
-    ports:
-      - '80:80'
-    networks:
-      - elastic
+
 networks:
   elastic:
     driver: bridge

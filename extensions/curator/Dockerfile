@@ -4,7 +4,7 @@ USER root
 
 RUN install_packages cron && \
         echo \
-        '* * * * *' \
+        '*/5 * * * *' \
         root \
         LC_ALL=C.UTF-8 LANG=C.UTF-8 \
         /opt/bitnami/python/bin/curator \

@@ -14,41 +14,8 @@ actions:
       - filtertype: pattern
         kind: prefix
         value: service-
-      - filtertype: pattern
-        kind: regex
-        value: service-[a-zA-Z0-9\-]-[]
       - filtertype: age
         source: creation_date
         direction: older
         unit: days
-        unit_count: 7
-  2:
-    action: alias
-    description: "Add/Remove selected indices to or from the specified alias"
-    options:
-      name: services
-    add:
-      filters:
-        - filtertype: pattern
-          kind: prefix
-          value: service-
-        - filtertype: pattern
-          kind: timestring
-          value: "%Y.%m.%d"
-          exclude: true
-    remove:
-      filters:
-        - filtertype: pattern
-          kind: timestring
-          value: "%Y.%m.%d"
-  3:
-    action: rollover
-    description: >-
-      Rollover the index associated with alias 'aliasname', which should be in the
-      form of prefix-000001 (or similar), or prefix-YYYY.MM.DD-1.
-    options:
-      name: services
-      conditions:
-        max_age: 1d
-        max_docs: 1000000
-        max_size: 5gb
+        unit_count: 1

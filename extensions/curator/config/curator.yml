@@ -9,4 +9,6 @@ client:
 
 logging:
   loglevel: INFO
+#  logfile: ./logs/log.log
   logformat: default
+  blacklist: ['elasticsearch', 'urllib3']
