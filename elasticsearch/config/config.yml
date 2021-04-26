@@ -103,6 +103,6 @@ config:
             verify_hostnames: false
             subject_key: preferred_username
             roles_key: roles
-            openid_connect_url: http://1authServer:8080/auth/realms/TestRealm/.well-known/openid-configuration
+            openid_connect_url: http://192.168.31.1:8080/auth/realms/TestRealm/.well-known/openid-configuration
         authentication_backend:
           type: noop
