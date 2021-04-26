@@ -13,6 +13,8 @@ elasticsearch.password: kibanaserver
 searchguard.cookie.password: 123567818187654rwrwfsfshdhdhtegdhfzftdhncn
 searchguard.accountinfo.enabled: true
 searchguard.auth.type: "openid"
-searchguard.openid.connect_url: "http://localhost:8080/auth/realms/TestRealm/.well-known/openid-configuration"
 searchguard.openid.client_id: "kibana-sso"
 searchguard.openid.client_secret: "dd622848-f8be-4290-806e-a5a186416433"
+searchguard.openid.connect_url: "http://192.168.31.22:8080/auth/realms/master/.well-known/openid-configuration"
+#elasticsearch.ssl.verificationMode: none
+#elasticsearch.requestHeadersWhitelist: [ "Authorization", "x-forwarded-for", "x-forwarded-by", "x-proxy-user", "x-proxy-roles", "sgtenant" ]

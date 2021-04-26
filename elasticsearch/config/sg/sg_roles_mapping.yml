@@ -45,6 +45,3 @@ SGS_OWN_INDEX:
   users:
     - '*'
 
-sg_human_resources:
-  backendroles:
-    - hr
