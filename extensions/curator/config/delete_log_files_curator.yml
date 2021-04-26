@@ -13,7 +13,7 @@ actions:
     filters:
       - filtertype: pattern
         kind: regex
-        value: '^(logstash|security-auditlog)-.*'
+        value: '^(logstash|security-auditlog).-.*
       - filtertype: age
         source: creation_date
         direction: older
