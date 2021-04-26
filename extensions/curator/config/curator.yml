@@ -2,10 +2,11 @@
 # https://www.elastic.co/guide/en/elasticsearch/client/curator/current/configfile.html
 
 client:
-  hosts:
-    - elasticsearch
+  hosts: "elasticsearch"
   port: 9200
-  http_auth: elastic:izy0dx3EmAPTr8hnFrC6
+  http_auth: admin:admin
+  use_ssl: True
+#  ssl_no_validate: True
 
 logging:
   loglevel: INFO
