@@ -5,3 +5,14 @@ server.host: "0.0.0.0"
 elasticsearch.hosts: ["http://elasticsearch:9200"]
 monitoring.ui.container.elasticsearch.enabled: true
 elasticsearch.requestTimeout: 90000
+## Search Guard
+#
+elasticsearch.username: kibanaserver
+elasticsearch.password: kibanaserver
+
+searchguard.cookie.password: 123567818187654rwrwfsfshdhdhtegdhfzftdhncn
+searchguard.accountinfo.enabled: true
+searchguard.auth.type: "openid"
+searchguard.openid.connect_url: "http://localhost:8080/auth/realms/TestRealm/.well-known/openid-configuration"
+searchguard.openid.client_id: "kibana-sso"
+searchguard.openid.client_secret: "dd622848-f8be-4290-806e-a5a186416433"

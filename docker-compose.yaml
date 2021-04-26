@@ -9,8 +9,10 @@ services:
 #        SG_VERSION: $SG_VERSION
     environment:
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
-      - ELASTIC_PASSWORD=$ELK_PASSWORD
-      - ELASTIC_USERNAME=$ELK_USERNAME
+#      - ELASTIC_PASSWORD=$ELK_PASSWORD
+#      - ELASTIC_USERNAME=$ELK_USERNAME
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
 #      - http.cors.allow-origin=*
     #  PFrYZ95pn4JRCuz483v1
     ulimits:
@@ -39,6 +41,7 @@ services:
       context: kibana/
       args:
         ELK_VERSION: $ELK_VERSION
+        SG_VERSION_KIBANA: $SG_VERSION_KIBANA
     ports:
       - 5601:5601
     volumes:
@@ -47,8 +50,11 @@ services:
         target: /usr/share/kibana/config/kibana.yml
         read_only: true
     environment:
-      - ELASTICSEARCH_USERNAME=$ELK_USERNAME
-      - ELASTICSEARCH_PASSWORD=$ELK_PASSWORD
+      # The default of 1.4 GB is insufficient for optimizing
+      # Search Guard bundles
+      NODE_OPTIONS: --max-old-space-size=2048
+    #      - ELASTICSEARCH_USERNAME=$ELK_USERNAME
+#      - ELASTICSEARCH_PASSWORD=$ELK_PASSWORD
     networks:
       - elastic
     depends_on:
@@ -73,8 +79,8 @@ services:
         source: ./logstash/data/queue
         target: /usr/share/logstash/data/queue
     environment:
-      - ES_USER=$ELK_USERNAME
-      - ES_PASSWORD=$ELK_PASSWORD
+#      - ES_USER=$ELK_USERNAME
+#      - ES_PASSWORD=$ELK_PASSWORD
       - ES_JAVA_OPTS=-Xms256m -Xmx256m
     ports:
       - "5000:5000"
