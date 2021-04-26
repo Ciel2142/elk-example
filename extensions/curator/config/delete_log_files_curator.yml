@@ -12,8 +12,8 @@ actions:
       disable_action: False
     filters:
       - filtertype: pattern
-        kind: prefix
-        value: service-
+        kind: regex
+        value: '^(logstash|security-auditlog)-.*'
       - filtertype: age
         source: creation_date
         direction: older

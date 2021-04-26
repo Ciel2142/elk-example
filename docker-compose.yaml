@@ -72,8 +72,6 @@ services:
         source: ./logstash/data/queue
         target: /usr/share/logstash/data/queue
     environment:
-#      - ES_USER=$ELK_USERNAME
-#      - ES_PASSWORD=$ELK_PASSWORD
       - ES_JAVA_OPTS=-Xms256m -Xmx256m
     ports:
       - "5000:5000"
@@ -86,6 +84,7 @@ services:
     build:
       context: extensions/curator/
     init: true
+#    image: curator-with-grok:1.0.0
     volumes:
       - type: bind
         source: ./extensions/curator/config/curator.yml
