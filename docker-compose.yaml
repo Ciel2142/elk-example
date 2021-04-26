@@ -46,7 +46,6 @@ services:
         source: ./kibana/config/kibana.yml
         target: /usr/share/kibana/config/kibana.yml
         read_only: true
-#      - ./kibana/config:/usr/share/kibana/config
     environment:
       - ELASTICSEARCH_USERNAME=$ELK_USERNAME
       - ELASTICSEARCH_PASSWORD=$ELK_PASSWORD
@@ -87,8 +86,6 @@ services:
   curator:
     build:
       context: extensions/curator/
-      args:
-        CRON_CURATOR: $CRON_CURATOR
     init: true
     volumes:
       - type: bind
