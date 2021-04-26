@@ -4,7 +4,8 @@
 client:
   hosts: "elasticsearch"
   port: 9200
-  http_auth: admin:admin
+  username: admin
+  password: admin
   use_ssl: True
 #  ssl_no_validate: True
 

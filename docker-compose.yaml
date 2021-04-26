@@ -2,7 +2,7 @@ version: '2.0'
 services:
   elasticsearch:
     container_name: elasticsearch
-    image: amazon/opendistro-for-elasticsearch:1.13.2
+    image: amazon/opendistro-for-elasticsearch:${OD_ELK_VERSION}
 
     environment:
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
@@ -35,7 +35,7 @@ services:
 
   kibana:
     container_name: kibana
-    image: amazon/opendistro-for-elasticsearch-kibana:1.13.2
+    image: amazon/opendistro-for-elasticsearch-kibana:${OD_ELK_VERSION}
     ports:
       - 5601:5601
     volumes:
