@@ -20,6 +20,9 @@ services:
         hard: 65536
     volumes:
       - type: bind
+        source: ./elasticsearch/bin/sh_init.sh
+        target: /usr/share/elasticsearch/bin/sec_init.sh
+      - type: bind
         source: ./elasticsearch/storage
         target: /usr/share/elasticsearch/data
       - type: bind
