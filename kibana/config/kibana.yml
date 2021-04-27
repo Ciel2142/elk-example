@@ -14,11 +14,11 @@ opendistro_security.auth.type: "openid"
 #server.ssl.enabled: false
 
 # The IdP metadata endpoint
-opendistro_security.openid.connect_url: "http://192.168.31.22:8080/auth/realms/TestRealm/.well-known/openid-configuration"
+opendistro_security.openid.connect_url: "/auth/realms/TestRealm/.well-known/openid-configuration"
 
 # The ID of the OpenID Connect client in your IdP
 opendistro_security.openid.client_id: kibana-sso
-opendistro_security.openid.base_redirect_url: "http://192.168.31.22:5601"
+opendistro_security.openid.base_redirect_url: ""
 # The client secret of the OpenID Connect client
 opendistro_security.openid.client_secret: "dd622848-f8be-4290-806e-a5a186416433"
 
